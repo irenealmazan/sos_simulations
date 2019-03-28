@@ -72,16 +72,17 @@ zbarr =   7*[1 1 1 1 1];  % SURFACE NORMAL BARRIER ENERGIES / kT
 
 amsurf = 1;      % NUMBER OF MONOLAYERS IN SURFACE PHASE
 
-runname = 'miscut_8_15';
+runname = 'miscut_8_16';
 
 % Parameters that change at each interval:
-gasconc =  [3.333e-9];   % GAS CONCENTRATION
+gasconc =  [3.333e-9]/2;   % GAS CONCENTRATION
 MLdata =   [0.005];       % ML INTERVAL BETWEEN DATA POINTS
 dtdata =   MLdata./gasconc;   % TIME INTERVAL BETWEEN DATA POINTS
-MLend =     [1];     % END ML FOR INTERVALS
+MLend =    [5];     % END ML FOR INTERVALS
 tend =     MLend./gasconc;   % END TIMES FOR INTERVALS
 saveflag = [1   ];   % FLAG: SAVE RESULTS
 dispflag = [0   ];   % FLAG: DISPLAY RESULTS
+%plotflag = [0   ];   % FLAG: DISABLES FIGURES TO RUN CODE WITH MATLAB OPTION -NODISPLAY
 endimage = [0   ];   % FLAG: SAVE LAST IMAGE OF INTERVAL
 
 tstart = 0;
@@ -263,6 +264,7 @@ ihs = NaN*ones(nrow,ncol,length(endimage)); % To save end images
 
 if sum(dispflag) > 0
 
+  
     figure;
     set(gcf,'Position',[600 200 500 400]);
     set(gcf,'PaperPosition',[1 1 5 4]);
@@ -271,6 +273,7 @@ if sum(dispflag) > 0
     axis image
     shading flat;
     set(gca,'Visible','off');
+    
     xp = ncol*[0 0.6 0.6 0];
     yp = nrow*[0 0 0.1 0.1];
     patch(xp,yp,'w');
@@ -281,14 +284,37 @@ if sum(dispflag) > 0
     colorbar;
     pause(0.3);
     hc = get(gca,'Children');
+    
+else
+    %{
+    figure;
+    set(gcf,'Position',[600 200 500 400]);
+    set(gcf,'PaperPosition',[1 1 5 4]);
+    axes('Box','on');
+    imagesc(ih,clim);
+    axis image
+    shading flat;
+    set(gca,'Visible','off');
+    %}
+    xp = ncol*[0 0.6 0.6 0];
+    yp = nrow*[0 0 0.1 0.1];
+%    patch(xp,yp,'w');
+    xtx = ncol/40;
+    ytx = nrow/20;
+    ht = text(xtx,ytx,[num2str(amono,'%5.2f'),' ML, time = ',int2str(time)]);
+%    set(ht,'Color',textclr,'FontSize',12);
+%    colorbar;
+    pause(0.3);
+%    hc = get(gca,'Children');
+    
 end
 
-if dispflag(intvl) > 0
+%if dispflag(intvl) > 0
 
     % Save image matrix
     ihm(:,:,ipt) = ih;
     ipt = ipt + 1;
-end
+%end
 
 if sum(saveflag) > 0
     amono=natoms/(nrow*ncol);
@@ -577,6 +603,20 @@ if time > ctd
         ihm(:,:,ipt) = ih;
         ipt = ipt + 1;
         
+    else
+        %set(hc(end),'CData',ih);
+        %imagesc(ih,clim);
+        %axis image;
+        %set(gca,'Visible','off');
+        %patch(xp,yp,'w');
+        ht = text(xtx,ytx,[num2str(amono,'%5.2f'),' ML, time = ',int2str(time)]);
+        %set(ht,'Color',textclr,'FontSize',12);
+        pause(0.05);
+    
+        % Save image matrix
+        ihm(:,:,ipt) = ih;
+        ipt = ipt + 1;
+        
     end
 
 %       Display stats
@@ -605,6 +645,8 @@ if sum(endimage) > 0
     disp('Printing end images.');
     for ii = 1:length(endimage)
         if endimage(ii)
+           
+            if sum(dispflag)
             figure;
             set(gcf,'Position',[600 200 400 400]);
             set(gcf,'PaperPosition',[1 1 4 4]);
@@ -614,6 +656,8 @@ if sum(endimage) > 0
             axis image
             shading flat;
             set(gca,'Visible','off');
+            end
+            
             if 1
                 xp = ncol*[0 0.6 0.6 0];
                 yp = nrow*[0 0 0.1 0.1];
@@ -621,7 +665,9 @@ if sum(endimage) > 0
                 xtx = ncol/40;
                 ytx = nrow/20;
                 ht = text(xtx,ytx,[num2str(eamono(ii),'%5.2f'),' ML, time = ',int2str(etime(ii))]);
-                set(ht,'Color',textclr,'FontSize',12);
+                if sum(dispflag)
+                    set(ht,'Color',textclr,'FontSize',12);
+                end
             end
             
 %            eval(['print -depsc ' runname '_endimage_' num2str(ii)]);
@@ -636,7 +682,9 @@ if sum(saveflag) > 0
     eval(['save ' runname '_stats nrow ncol nsteps rmodel xybond zbond xybarr zbarr amsurf gasconc dtdata tstart tend ewell rtable damono dtime dnmove dneven dsurfc dnerr dntype dsum3 dsumd3 ihm']);
 end
 
-figure
-plot(damono,(2*dneven/(nrow*ncol)-1).^2);
-xlabel('Monolayers');
-ylabel('Anti-Bragg Intensity');
+if sum(dispflag)
+    figure
+    plot(damono,(2*dneven/(nrow*ncol)-1).^2);
+    xlabel('Monolayers');
+    ylabel('Anti-Bragg Intensity');
+end
