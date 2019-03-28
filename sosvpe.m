@@ -47,8 +47,11 @@
 % Equilibrium (fixed surfconc) growth rate (ML/s) = gasconc
 % Equilibrium surfconc = (gasconc + rtable(ii,6)) / rtable(6,ii)
 
+addpath(genpath('../'));
+
 global kgrp nrow ncol nsteps neven ih ibi ibf ibfd sum3 sum2g sum2 sum1g sum1 sumd3 sumd2g sumd2 sumd1g rate rtable;
 kstate = 6; % number of states
+
 
 % Number of members in each group of rows or columns:
 % This grouping added to increase speed of choosing a move.
@@ -84,6 +87,7 @@ saveflag = [1   ];   % FLAG: SAVE RESULTS
 dispflag = [0   ];   % FLAG: DISPLAY RESULTS
 %plotflag = [0   ];   % FLAG: DISABLES FIGURES TO RUN CODE WITH MATLAB OPTION -NODISPLAY
 endimage = [0   ];   % FLAG: SAVE LAST IMAGE OF INTERVAL
+freq_saving = 10; % FREQUENCY TO SAVE PARTIAL RESULTS
 
 tstart = 0;
 
@@ -144,5 +148,9 @@ end
 
 disp('**  CALCULATED RATE TABLE:');
 disp(rtable);
+
+%% DO THE SIMULATION
+
+sosvpe_mainloop;
 
 

@@ -54,7 +54,8 @@
 
 
 
-
+% Initialize counter:
+save_counter = 1;
 
 
 % Initialize state variables
@@ -533,10 +534,26 @@ if time > ctd
 
 %       Display stats
 
-    disp(['nmove = ' num2str(nmove) ', time = ' num2str(time) ', neven = ' num2str(neven) ', amono = ' num2str(amono) ', surfc = ' num2str(surfconc)]);
+    disp(['nmove = ' num2str(nmove) ', time = ' num2str(time) ', neven = ' num2str(neven) ', amono = ' num2str(amono) ', surfc = ' num2str(surfconc) ', iteration = ' num2str(save_counter)]);
+    
+    
+    % save
+    
+   
+    if sum(saveflag) > 0
+        if mod(save_counter,freq_saving) == 0
+            disp('Writing statistics file each half monlayer.');
+            eval(['save ' runname '_stats nrow ncol nsteps rmodel xybond zbond xybarr zbarr amsurf gasconc dtdata tstart tend ewell rtable damono dtime dnmove dneven dsurfc dnerr dntype dsum3 dsumd3 ihm']);
+        end
+    end
+  
+    save_counter = save_counter + 1;
+    
 end
 
 if (time >= tend(intvl)); break; end
+
+
 %*******END LOOP FOR EACH MOVE****************************
 end
 
