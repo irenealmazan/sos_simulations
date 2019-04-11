@@ -5,8 +5,9 @@
 % 22-FEB-19 GBS
 
 skip = 0;
-runname = 'miscut_8_13';
-runname_title = 'miscut\_8\_13';
+path = 'miscut_32_18/';
+runname = [path 'miscut_32_18'];
+runname_title = 'miscut\_32\_18';
 
 if ~skip
     
@@ -62,19 +63,29 @@ if ~skip
             ftms(iy,ixc) = 1e4; % comparable to ifft2
         end
     end
-       
+    
+    % simulation of probe:
+    [Xgrid,Ygrid] = meshgrid([1:ncol],[1:nrow]);
+    FWHM_X = 2e-4;
+    probe = exp(-FWHM_X.*(Xgrid-round(ncol/2)).^2).*ones(nrow,ncol);
+    
+    
     % Loop over all time steps
     nt = size(ihm,3); % Number of time steps
     ftm = NaN*ones(nrow,ncol,nt);
     
+    
+    
     for ii = 1:nt
         ph = xLsub.*(1 - xL.^(ihm(:,:,ii) - ihsub))./(1 - xL);
+        ph_probe = probe.*ph;
 
         % Calculate Fourier transform of phased height
         % It matters here whether to do fft2 or ifft2; 
         % ifft2 does exp(+iqr), and divides by nrow * ncol
         % also add substrate contribution to CTR positions here 
-        ftm(:,:,ii) = fftshift(ifft2(ph)) + ftms;
+        %ftm(:,:,ii) = fftshift(ifft2(ph)) + ftms;
+        ftm(:,:,ii) = fftshift(ifft2(ph_probe)) + ftms;
     end
 
     % Calc delta-t correlations for each pixel
@@ -242,11 +253,17 @@ xlabel('Q_X (pixels)');
 ylabel('Mean Correlation Time (ML)');
 title([runname_title]);
 
+
+
+
+% plot log(tau) vs log(Q_x-Q_1)
+
 figure
 set(gcf,'Position',POSITION);
 set(gcf,'PaperPosition',PAPERPOSITION);
 axes('Box','on');
-hl = line(abs(QX-ixaoff),mean(tauML(iycen+iyaoff+[-iyahw:iyahw],:),1));
+%hl = line(abs(QX-ixaoff),mean(tauML(iycen+iyaoff+[-iyahw:iyahw],:),1));
+hl = line((QX-ixaoff),mean(tauML(iycen+iyaoff+[-iyahw:iyahw],:),1));
 set(hl,'LineStyle','none','Marker','o');
 set(gca,'Xscale','log','Yscale','log');
 pa = axis;
@@ -258,9 +275,11 @@ for ii = iCTR
     hl = line(abs(nsteps*ii*[1 1]-ixaoff),pa(3:4));
     set(hl,'LineStyle','--','Color','r');
 end
-xlabel('Q_X (pixels)');
+xlabel('|Q_X - Q_1| (pixels)');
 ylabel('Mean Correlation Time (ML)');
 title([runname_title]);
+
+
 
 figure
 set(gcf,'Position',POSITION);
@@ -280,5 +299,32 @@ hl = line(abs(QY),mean(tauML(:,ixcen+ixaoff+[-ixahw:ixahw]),2));
 set(hl,'LineStyle','none','Marker','o');
 set(gca,'Xscale','log','Yscale','log');
 xlabel('Q_Y (pixels)');
+ylabel('Mean Correlation Time (ML)');
+title([runname_title]);
+
+
+% Irene's modification plot log(tau) vs log(Q_x-Q_1)
+
+figure
+set(gcf,'Position',POSITION);
+set(gcf,'PaperPosition',PAPERPOSITION);
+axes('Box','on');
+%hl = line(abs(QX-ixaoff),mean(tauML(iycen+iyaoff+[-iyahw:iyahw],:),1));
+QX_recentered = QX-ixaoff;
+index_pos = find(QX_recentered>0);
+hl = line((QX_recentered(index_pos)),mean(tauML(iycen+iyaoff+[-iyahw:iyahw],index_pos),1));
+set(hl,'LineStyle','none','Marker','o');
+set(gca,'Xscale','log','Yscale','log');
+pa = axis;
+%hl = line(abs(QX-ixaoff),tauMLth);
+hl = line(QX_recentered(index_pos),tauMLth((index_pos)));
+set(hl,'LineStyle','-','Color','m');
+axis(pa);
+% Show CTR positions
+for ii = iCTR
+    hl = line(abs(nsteps*ii*[1 1]-ixaoff),pa(3:4));
+    set(hl,'LineStyle','--','Color','r');
+end
+xlabel('|Q_X - Q_1| (pixels)');
 ylabel('Mean Correlation Time (ML)');
 title([runname_title]);
