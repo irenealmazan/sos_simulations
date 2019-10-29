@@ -1,6 +1,6 @@
 close all;clear all;
 
-computer_flag = 'blueshift';
+computer_script; % set the value of computer_flag
 if strcmp(computer_flag,'blueshift')
     addpath(genpath(['./XPCS_analysis_on_thefly']));
     
