@@ -4,6 +4,7 @@ function make_vid(runname,clim,cmap)
 % 15-Aug-14 GBS
 
 load([runname '_stats.mat']);
+load([runname '_ihm.mat']);
 
 clear MOV1
 % Prepare the new file.

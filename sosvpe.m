@@ -75,14 +75,14 @@ zbarr =   7*[1 1 1 1 1];  % SURFACE NORMAL BARRIER ENERGIES / kT
 
 amsurf = 1;      % NUMBER OF MONOLAYERS IN SURFACE PHASE
 
-runname = 'miscut_8_16';
+runname = 'miscut_8_20';
 
 % Parameters that change at each interval:
-gasconc =  [3.333e-9]/2;   % GAS CONCENTRATION
+gasconc =  0;%[3.333e-9]/2;   % GAS CONCENTRATION
 MLdata =   [0.005];       % ML INTERVAL BETWEEN DATA POINTS
-dtdata =   MLdata./gasconc;   % TIME INTERVAL BETWEEN DATA POINTS
+dtdata =   1e7;%MLdata./gasconc;   % TIME INTERVAL BETWEEN DATA POINTS
 MLend =    [5];     % END ML FOR INTERVALS
-tend =     MLend./gasconc;   % END TIMES FOR INTERVALS
+tend =     1e10;%MLend./gasconc;   % END TIMES FOR INTERVALS
 saveflag = [1   ];   % FLAG: SAVE RESULTS
 dispflag = [0   ];   % FLAG: DISPLAY RESULTS
 %plotflag = [0   ];   % FLAG: DISABLES FIGURES TO RUN CODE WITH MATLAB OPTION -NODISPLAY
