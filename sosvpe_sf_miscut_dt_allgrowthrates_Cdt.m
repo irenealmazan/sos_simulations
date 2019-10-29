@@ -1,7 +1,12 @@
 close all;clear all;
 
-addpath(genpath(['/Users/ialmazn/Documents/data_analysis_ALL/XPCS_sputtering_ZnO_TiO2_2017_2019/XPCS_analysis_on_thefly']));
-
+computer_flag = 'blueshift';
+if strcmp(computer_flag,'blueshift')
+    addpath(genpath(['./XPCS_analysis_on_thefly']));
+    
+else
+    addpath(genpath(['/Users/ialmazn/Documents/data_analysis_ALL/XPCS_sputtering_ZnO_TiO2_2017_2019/XPCS_analysis_on_thefly']));
+end
 
  %paths = ['miscut_8_14/';'miscut_8_17/';'miscut_8_21/'];
  %runnames = ['miscut_8_14';'miscut_8_17';'miscut_8_21'];
