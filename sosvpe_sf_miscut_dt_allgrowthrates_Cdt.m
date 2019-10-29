@@ -1,7 +1,10 @@
 close all;clear all;
 
 computer_script; % set the value of computer_flag
+<<<<<<< HEAD
 %computer_flag = 'MACOSX';
+=======
+>>>>>>> 948d1ebadee76282133cb7b6e20800700d8658a2
 if strcmp(computer_flag,'blueshift')
     addpath(genpath(['./XPCS_analysis_on_thefly']));
     
