@@ -47,7 +47,7 @@ end
 %% fit the CdtI with two single exponential decays (taking as the fast decay time constant, 
 %  the time constant obtained from the fit of the 0 growth rate)
 
-skip_fit = 1;
+skip_fit = 0;
 
 if ~skip_fit
     
@@ -81,39 +81,54 @@ if ~skip_fit
     
     
     
-    for ss = 2:size(runnames,1)
+    for ss = size(runnames,1)%2:size(runnames,1)
         path = paths{ss,:};
         
         display(path)
         
-        damHW_file2 = [path 'damHW_fit_doubleexp.mat'];%[path 'damHW_fit_single_exp.mat'];%
+        damHW_file = [path 'damHW_fit_singleexp.mat'];%[path 'damHW_fit_doubleexp.mat'];%
         
         
-        [fit_res] = Functions_sos.calc_damHW_byfit_double_exp_contrast(nrow,ncol,Cdt_struct(ss).Cdt,damHW0,Cdt_struct(ss).ddam);
-        %Functions_sos.calc_damHW_byfit(nrow,ncol,Cdt_struct(ss).Cdt,Cdt_struct(ss).ddam);
+        [fit_res] = Functions_sos.calc_damHW_byfit(nrow,ncol,Cdt_struct(ss).Cdt,Cdt_struct(ss).ddam);
+        %Functions_sos.calc_damHW_byfit_double_exp_contrast(nrow,ncol,Cdt_struct(ss).Cdt,damHW0,Cdt_struct(ss).ddam);
+        %
         
         
-        save([damHW_file2],'fit_res');
+        save([damHW_file],'fit_res');
         
-        %Cdt_struct(ss).damHW = fit_res.damHW;
-        %Cdt_struct(ss).contrast = fit_res.contrast;
-        %Cdt_struct(ss).back = fit_res.back;
-        %Cdt_struct(ss).slope = fit_res.slope;
-        Cdt_struct(ss).damHW_slow = fit_res.damHW_slow;
-        Cdt_struct(ss).damHW_fast = fit_res.damHW_fast;
-        Cdt_struct(ss).back = fit_res.back;
-        Cdt_struct(ss).contrast_slow = fit_res.contrast_slow;
-        Cdt_struct(ss).contrast_fast = fit_res.contrast_fast;
-        Cdt_struct(ss).slope = fit_res.slope;
-        
-        
-        Cdt_struct(ss).damHW_slow_sigma = fit_res.sigma_damHW_slow;
-        Cdt_struct(ss).damHW_fast_sigma = fit_res.sigma_damHW_fast;
-        Cdt_struct(ss).back_sigma = fit_res.sigma_back;
-        Cdt_struct(ss).contrast_slow_sigma = fit_res.sigma_contrast_slow;
-        Cdt_struct(ss).contrast_fast_sigma = fit_res.sigma_contrast_fast;
-        Cdt_struct(ss).slope_sigma = fit_res.sigma_slope;
-        
+        switch damHW_file
+            case [path 'damHW_fit_doubleexp.mat']
+                Cdt_struct(ss).damHW_slow = fit_res.damHW_slow;
+                Cdt_struct(ss).damHW_fast = fit_res.damHW_fast;
+                Cdt_struct(ss).back = fit_res.back;
+                Cdt_struct(ss).contrast_slow = fit_res.contrast_slow;
+                Cdt_struct(ss).contrast_fast = fit_res.contrast_fast;
+                Cdt_struct(ss).slope = fit_res.slope;
+                
+                Cdt_struct(ss).damHW_slow_sigma = fit_res.sigma_damHW_slow;
+                Cdt_struct(ss).damHW_fast_sigma = fit_res.sigma_damHW_fast;
+                Cdt_struct(ss).back_sigma = fit_res.sigma_back;
+                Cdt_struct(ss).contrast_slow_sigma = fit_res.sigma_contrast_slow;
+                Cdt_struct(ss).contrast_fast_sigma = fit_res.sigma_contrast_fast;
+                Cdt_struct(ss).slope_sigma = fit_res.sigma_slope;
+                
+            case [path 'damHW_fit_singleexp.mat']
+                Cdt_struct(ss).damHW_fast = zeros(nrow,ncol);
+                Cdt_struct(ss).damHW_slow = fit_res.damHW;
+                Cdt_struct(ss).back = fit_res.back;
+                Cdt_struct(ss).contrast_fast = zeros(nrow,ncol);
+                Cdt_struct(ss).contrast_slow = fit_res.contrast;
+                Cdt_struct(ss).slope =  zeros(nrow,ncol);
+                
+                Cdt_struct(ss).damHW_slow_sigma = fit_res.sigma_damHW;
+                Cdt_struct(ss).damHW_fast_sigma = zeros(nrow,ncol);
+                Cdt_struct(ss).back_sigma = fit_res.sigma_back;
+                Cdt_struct(ss).contrast_slow_sigma =  fit_res.sigma_contrast;
+                Cdt_struct(ss).contrast_fast_sigma =zeros(nrow,ncol);
+                Cdt_struct(ss).slope_sigma = fit_res.sigma_slope;
+                
+        end    
+            
     end
     
 else
