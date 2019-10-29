@@ -89,7 +89,7 @@ if ~skip_fit
         damHW_file = [path 'damHW_fit_singleexp.mat'];%[path 'damHW_fit_doubleexp.mat'];%
         
         
-        [fit_res] = Functions_sos.calc_damHW_byfit(nrow,ncol,Cdt_struct(ss).Cdt,Cdt_struct(ss).ddam);
+        [fit_res] = Functions_sos.calc_damHW_byfit(nrow,ncol,Cdt_struct(ss).Cdt,Cdt_struct(ss).ddam,path);
         %Functions_sos.calc_damHW_byfit_double_exp_contrast(nrow,ncol,Cdt_struct(ss).Cdt,damHW0,Cdt_struct(ss).ddam);
         %
         
