@@ -1,6 +1,7 @@
 close all;clear all;
 
 computer_script; % set the value of computer_flag
+
 if strcmp(computer_flag,'blueshift')
     addpath(genpath(['./XPCS_analysis_on_thefly']));
     
@@ -46,7 +47,7 @@ end
 %% fit the CdtI with two single exponential decays (taking as the fast decay time constant, 
 %  the time constant obtained from the fit of the 0 growth rate)
 
-skip_fit = 0;
+skip_fit = 1;
 
 if ~skip_fit
     
@@ -148,7 +149,7 @@ else
     for ss = 2:size(runnames,1)
         path = paths{ss,:};
         
-        damHW_file = [path 'damHW_fit_doubleexp.mat'];%[path 'damHW.mat'];%[path 'damHW_fit_doubleexp.mat'];%
+        damHW_file = [path 'damHW_fit_singleexp.mat'];%%[path 'damHW_fit_doubleexp.mat'];%[path 'damHW.mat'];%[path 'damHW_fit_doubleexp.mat'];%
         
         load([damHW_file]);
         
@@ -162,12 +163,12 @@ else
                 Cdt_struct(ss).contrast_fast = fit_res.contrast_fast;
                 Cdt_struct(ss).slope = fit_res.slope;
                 
-                Cdt_struct(ss).damHW_slow_sigma = zeros(nrow,ncol);%fit_res.sigma_damHW_slow;
-                Cdt_struct(ss).damHW_fast_sigma = zeros(nrow,ncol);%fit_res.sigma_damHW_fast;
-                Cdt_struct(ss).back_sigma = zeros(nrow,ncol);%fit_res.sigma_back;
-                Cdt_struct(ss).contrast_slow_sigma = zeros(nrow,ncol);%fit_res.sigma_contrast_slow;
-                Cdt_struct(ss).contrast_fast_sigma = zeros(nrow,ncol);%fit_res.sigma_contrast_fast;
-                Cdt_struct(ss).slope_sigma = zeros(nrow,ncol);%fit_res.sigma_slope;
+                Cdt_struct(ss).damHW_slow_sigma = fit_res.sigma_damHW_slow;
+                Cdt_struct(ss).damHW_fast_sigma = fit_res.sigma_damHW_fast;
+                Cdt_struct(ss).back_sigma = fit_res.sigma_back;
+                Cdt_struct(ss).contrast_slow_sigma = fit_res.sigma_contrast_slow;
+                Cdt_struct(ss).contrast_fast_sigma = fit_res.sigma_contrast_fast;
+                Cdt_struct(ss).slope_sigma = fit_res.sigma_slope;
                 
             case [path 'damHW_fit_singleexp.mat']
                 Cdt_struct(ss).damHW_fast = fit_res.damHW;
@@ -265,9 +266,9 @@ PAPERSIZE = [ 8.5000   11.0000];
 
 %% Plot fits
 
-%fitfunc_str = 'FittingFunctions.CCN2single_fit';
+fitfunc_str = 'FittingFunctions.CCN2single_fit';
 %fitfunc_str = 'FittingFunctions.CCN2single_fit_double_exp';
-fitfunc_str = 'FittingFunctions.CCN2single_fit_double_exp_contrast';
+%fitfunc_str = 'FittingFunctions.CCN2single_fit_double_exp_contrast';
 pixel_to_plot_row = [[1:30:nrow]-nrow/2]' ;
 pixel_to_plot_col = [[1:30:ncol]-ncol/2]';%[-13 6];
 %figNum = 12;
@@ -398,7 +399,7 @@ Function_display_sos.make_figure_2D( title_figure,map2D,'Contrast_manual',struct
     'plot_averages',0);
 %}
 
-
+%{
 % Figure 300: background
 figNum = 300;
 % time frame to represent:
@@ -414,7 +415,7 @@ Function_display_sos.make_figure_2D( title_figure,map2D,'back',struct_ranges,iCT
     'CLIM',[0 0.2],...
     'POSITION',POSITION,'PAPERPOSITION',PAPERPOSITION,...
     'plot_averages',0);
-
+%}
 
 
 return;
@@ -435,9 +436,8 @@ tauMLth_Qy_2p5 = .03e5*nsteps./(pi*abs(QY).^2.5); % Unclear factor
 % average over rows
 range_rows = iycen+iyaoff+[-iyahw:iyahw];
 
-for ss = 2:size(runnames,1)
-    kk = ss-1;
-    tauML_1D = mean(Cdt_struct(ss).damHW_slow(range_rows,:),1);
+for kk = 1:size(runnames,1)
+    tauML_1D = mean(Cdt_struct(kk).damHW_fast(range_rows,:),1);%mean(Cdt_struct(ss).damHW_slow(range_rows,:),1);
     damHW1D_struct(kk).tauML_1D_Qx = tauML_1D;
 
     Qx_offset = QX-ixaoff;
@@ -455,7 +455,7 @@ for ss = 2:size(runnames,1)
     damHW1D_struct(kk).tauML_1D_Qx_negative = tauML_Qx_negative;
     damHW1D_struct(kk).tauML_th_QX_negative = tauML_th_QX_negative;
     
-    damHW1D_struct(kk).Color = color_rates_allgrowth(kk);
+    damHW1D_struct(kk).Color = color_rates_allgrowth(kk,:);
     legend_str{kk} = [' growth rate (ML/s) = ' num2str(growth_rates_all(kk))];%[runname ' growth rate (ML/s) = ' num2str(growth_rates_all(kk))];
 end
 
@@ -494,9 +494,9 @@ legend(legend_str);
 % average over columns
 range_cols = ixcen+ixaoff+[-ixahw:ixahw];
 
-for kk = 1:size(runname,1)
-    kk = ss-1;
-    tauML_1D = mean(Cdt_struct(ss).damHW_slow(:,range_cols),2);
+for kk = 1:size(runnames,1)
+    %kk = ss-1;
+    tauML_1D = mean(Cdt_struct(kk).damHW_fast(:,range_cols),2);%mean(Cdt_struct(ss).damHW_slow(:,range_cols),2);
 
     damHW1D_struct(kk).tauML_1D_Qy = tauML_1D;
 
@@ -515,7 +515,7 @@ for kk = 1:size(runname,1)
     damHW1D_struct(kk).tauML_1D_Qy_negative = tauML_Qy_negative;
     damHW1D_struct(kk).tauML_th_QY_negative = tauML_th_Qy_negative;
     
-    damHW1D_struct(kk).Color = color_rates_allgrowth(kk);
+    damHW1D_struct(kk).Color = color_rates_allgrowth(kk,:);
     legend_str{kk} = [' growth rate (ML/s) = ' num2str(growth_rates_all(kk))];%[runname_title ' growth rate (ML/s) = ' num2str(growth_rates_all(kk))];
 end
 
