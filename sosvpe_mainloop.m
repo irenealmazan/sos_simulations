@@ -1,5 +1,5 @@
 % Matlab code created 09-Aug-14 from fortran code of 1993
-% Modifid by I. Calvo-Almazan, 28-Mar-19
+% Modified by I. Calvo-Almazan, 28-Mar-19
 %     It has to be called through sosvpe.m which sets all the initialize
 %     flags
 
@@ -553,6 +553,7 @@ if time > ctd
     
 end
 
+<<<<<<< HEAD
 
 %%%%% Irene's addition to test effect of xybarr in the time scale
 if xybarr_test_flag
@@ -560,6 +561,14 @@ if xybarr_test_flag
         break;
     end
     
+=======
+%%%%%%% Irene's addition to check the dependence of the time to xybarr
+
+if xybarr_test_flag
+   if numel(dtime)>1
+       break
+   end
+>>>>>>> 797f37147232ecaa864fa362500e5a92ae102ef6
 end
 
 if (time >= tend(intvl)); break; end
@@ -575,7 +584,7 @@ if endimage(intvl)
 end
     
     
-intvl = intvl + 1;
+intvl =   + 1;
 if (intvl > length(tend)); break; end
 ctd = tend(intvl-1) + dtdata(intvl);
 %*******END LOOP FOR EACH INTERVAL****************************
