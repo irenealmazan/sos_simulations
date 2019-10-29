@@ -1,10 +1,6 @@
 close all;clear all;
 
 computer_script; % set the value of computer_flag
-<<<<<<< HEAD
-%computer_flag = 'MACOSX';
-=======
->>>>>>> 948d1ebadee76282133cb7b6e20800700d8658a2
 if strcmp(computer_flag,'blueshift')
     addpath(genpath(['./XPCS_analysis_on_thefly']));
     
@@ -22,10 +18,6 @@ runname_titles = {'miscut\_32\_36';'miscut\_32\_40';'miscut\_32\_39';'miscut\_32
 
 
 growth_rates_all = [0.0 3.3e-9/64 3.3e-9/32 3.3e-9/16 3.3e-9/8 3.3e-9/4 3.3e-9/2 3.3e-9];
-<<<<<<< HEAD
-
-=======
->>>>>>> 4d4ec6baab06e11e303bacaf78faf87c7ed0a9f9
 color_rates_allgrowth = ['or';'ok';'om';'ob';'og';'oy';'oc';'ob'];%['k'];%
 path_save_fig = ['./figures_presentation_v6'];
 
