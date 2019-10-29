@@ -19,6 +19,7 @@ runname_titles = {'miscut\_32\_36';'miscut\_32\_40';'miscut\_32\_39';'miscut\_32
 
 
 growth_rates_all = [0.0 3.3e-9/64 3.3e-9/32 3.3e-9/16 3.3e-9/8 3.3e-9/4 3.3e-9/2 3.3e-9];
+
 color_rates_allgrowth = ['or';'ok';'om';'ob';'og';'oy';'oc';'ob'];%['k'];%
 path_save_fig = ['./figures_presentation_v6'];
 
@@ -47,7 +48,7 @@ end
 %% fit the CdtI with two single exponential decays (taking as the fast decay time constant, 
 %  the time constant obtained from the fit of the 0 growth rate)
 
-skip_fit = 1;
+skip_fit = 0;
 
 if ~skip_fit
     
@@ -105,6 +106,14 @@ if ~skip_fit
         Cdt_struct(ss).contrast_slow = fit_res.contrast_slow;
         Cdt_struct(ss).contrast_fast = fit_res.contrast_fast;
         Cdt_struct(ss).slope = fit_res.slope;
+        
+        
+        Cdt_struct(ss).damHW_slow_sigma = fit_res.sigma_damHW_slow;
+        Cdt_struct(ss).damHW_fast_sigma = fit_res.sigma_damHW_fast;
+        Cdt_struct(ss).back_sigma = fit_res.sigma_back;
+        Cdt_struct(ss).contrast_slow_sigma = fit_res.sigma_contrast_slow;
+        Cdt_struct(ss).contrast_fast_sigma = fit_res.sigma_contrast_fast;
+        Cdt_struct(ss).slope_sigma = fit_res.sigma_slope;
         
     end
     
@@ -205,6 +214,8 @@ for ss = 1:size(runnames,1)
 end
 
 %}
+
+return;
 
 %% Initialize parameters to plot
 
