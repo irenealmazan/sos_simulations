@@ -4,6 +4,8 @@ function make_vid(runname,clim,cmap)
 % 15-Aug-14 GBS
 
 load([runname '_stats.mat']);
+load([runname '_ihm.mat']);
+%load([runname '_corr_dt.mat']);
 
 clear MOV1
 % Prepare the new file.
@@ -32,7 +34,8 @@ yp = nrow*[0 0 0.1 0.1];
 patch(xp,yp,'w');
 xtx = ncol/40;
 ytx = nrow/20;
-ht = text(xtx,ytx,[num2str(damono(1),'%5.2f'),' ML, time = ',int2str(dtime(1))]);
+%ht = text(xtx,ytx,[num2str(damono(1),'%5.2f'),' ML, time = ',int2str(dtime(1))]);
+ht = text(xtx,ytx,[num2str(damono(1),'%5.2f'),' ML, time frame = 1']);
 set(ht,'Color',textclr,'FontSize',12);
 pause(0.1);
 
@@ -45,7 +48,8 @@ writeVideo(vidObj,MOV1(1));
 for ipt = 2:size(ihm,3)
     set(hc(end),'CData',squeeze(ihm(:,:,ipt)));
     patch(xp,yp,'w');
-    ht = text(xtx,ytx,[num2str(damono(ipt),'%5.2f'),' ML, time = ',int2str(dtime(ipt))]);
+    ht = text(xtx,ytx,[num2str(damono(ipt),'%5.2f'),' ML, time frame= ',int2str(ipt)]);
+    %ht = text(xtx,ytx,[num2str(damono(ipt),'%5.2f'),' ML, time = ',int2str(dtime(ipt))]);
     set(ht,'Color',textclr,'FontSize',12);
     pause(0.1);
     
