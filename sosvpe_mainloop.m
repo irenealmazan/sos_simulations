@@ -543,7 +543,9 @@ if time > ctd
     if sum(saveflag) > 0
         if mod(save_counter,freq_saving) == 0
             disp('Writing statistics file each half monlayer.');
-            eval(['save ' runname '_stats nrow ncol nsteps rmodel xybond zbond xybarr zbarr amsurf gasconc dtdata tstart tend ewell rtable damono dtime dnmove dneven dsurfc dnerr dntype dsum3 dsumd3 ihm']);
+            %eval(['save ' runname '_stats nrow ncol nsteps rmodel xybond zbond xybarr zbarr amsurf gasconc dtdata tstart tend ewell rtable damono dtime dnmove dneven dsurfc dnerr dntype dsum3 dsumd3 ihm']);
+            eval(['save ' runname '_stats nrow ncol nsteps rmodel xybond zbond xybarr zbarr amsurf gasconc dtdata tstart tend ewell rtable damono dtime dnmove dneven dsurfc dnerr dntype dsum3 dsumd3']);
+            save([runname '_ihm.mat'],'ihm','-v7.3');
         end
     end
   
@@ -616,7 +618,9 @@ end
 
 if sum(saveflag) > 0
     disp('Writing statistics file.');
-    eval(['save ' runname '_stats nrow ncol nsteps rmodel xybond zbond xybarr zbarr amsurf gasconc dtdata tstart tend ewell rtable damono dtime dnmove dneven dsurfc dnerr dntype dsum3 dsumd3 ihm']);
+   %eval(['save ' runname '_stats nrow ncol nsteps rmodel xybond zbond xybarr zbarr amsurf gasconc dtdata tstart tend ewell rtable damono dtime dnmove dneven dsurfc dnerr dntype dsum3 dsumd3 ihm']);
+    eval(['save ' runname '_stats nrow ncol nsteps rmodel xybond zbond xybarr zbarr amsurf gasconc dtdata tstart tend ewell rtable damono dtime dnmove dneven dsurfc dnerr dntype dsum3 dsumd3']);
+    save([runname '_ihm.mat'],'ihm','-v7.3');
 end
 
 if sum(dispflag)
