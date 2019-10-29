@@ -52,7 +52,7 @@ end
 %% fit the CdtI with two single exponential decays (taking as the fast decay time constant, 
 %  the time constant obtained from the fit of the 0 growth rate)
 
-skip_fit = 1;
+skip_fit = 0;
 
 if ~skip_fit
     
@@ -110,6 +110,14 @@ if ~skip_fit
         Cdt_struct(ss).contrast_slow = fit_res.contrast_slow;
         Cdt_struct(ss).contrast_fast = fit_res.contrast_fast;
         Cdt_struct(ss).slope = fit_res.slope;
+        
+        
+        Cdt_struct(ss).damHW_slow_sigma = fit_res.sigma_damHW_slow;
+        Cdt_struct(ss).damHW_fast_sigma = fit_res.sigma_damHW_fast;
+        Cdt_struct(ss).back_sigma = fit_res.sigma_back;
+        Cdt_struct(ss).contrast_slow_sigma = fit_res.sigma_contrast_slow;
+        Cdt_struct(ss).contrast_fast_sigma = fit_res.sigma_contrast_fast;
+        Cdt_struct(ss).slope_sigma = fit_res.sigma_slope;
         
     end
     
@@ -210,6 +218,8 @@ for ss = 1:size(runnames,1)
 end
 
 %}
+
+return;
 
 %% Initialize parameters to plot
 
