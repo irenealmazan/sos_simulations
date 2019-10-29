@@ -1,6 +1,7 @@
 close all;clear all;
 
-computer_flag = 'blueshift';
+computer_script; % set the value of computer_flag
+%computer_flag = 'MACOSX';
 if strcmp(computer_flag,'blueshift')
     addpath(genpath(['./XPCS_analysis_on_thefly']));
     
@@ -12,21 +13,15 @@ end
  %runnames = ['miscut_8_14';'miscut_8_17';'miscut_8_21'];
  %runname_titles = ['miscut\_8\_14';'miscut\_8\_17'; 'miscut\_8\_21'];
 
-paths = {'miscut_32_29/';'miscut_32_30/';'miscut_32_35/';'miscut_32_37/';'miscut_32_38/';'miscut_32_39/';'miscut_32_40/';'miscut_32_36/'};%{'miscut_32_36secondhalf/';'miscut_32_31half/';}%{'miscut_32_36transient/';'miscut_32_36firsthalf/';'miscut_32_36secondhalf/'};%{'miscut_32_31firsthalf/';'miscut_32_31half/'};%{'miscut_32_31/';'miscut_32_31half/';'miscut_32_31quarter/';'miscut_32_31eight/'};%['miscut_32_31/';'miscut_32_31half/'];%['miscut_32_33/';'miscut_32_34/'];%['miscut_32_30/';'miscut_32_33/'];%['miscut_32_23/';'miscut_32_30/'];%['miscut_32_23/';'miscut_32_30/'];%['miscut_32_22/';'miscut_32_23/';'miscut_32_28/';'miscut_32_26/'];%['miscut_32_27/'];%['miscut_8_14/'];%['miscut_32_22/'];%
-runnames = {'miscut_32_29';'miscut_32_30';'miscut_32_35';'miscut_32_37';'miscut_32_38';'miscut_32_39';'miscut_32_40';'miscut_32_36'};%{'miscut_32_36secondhalf';'miscut_32_31half';}% {'miscut_32_36transient';'miscut_32_36firsthalf';'miscut_32_36secondhalf'}; %{'miscut_32_29';'miscut_32_30';'miscut_32_35';'miscut_32_31'};%{'miscut_32_31firsthalf';'miscut_32_31half'};%{'miscut_32_31';'miscut_32_31half';'miscut_32_31quarter' ;'miscut_32_31eight'};%%['miscut_32_33';'miscut_32_34'];%['miscut_32_30';'miscut_32_33'];%['miscut_32_29';'miscut_32_30';'miscut_32_31'];%['miscut_32_22';'miscut_32_23';'miscut_32_28';'miscut_32_26'];%['miscut_32_27'];%['miscut_8_14'];%['miscut_32_22'];%
-runname_titles = {'miscut\_32\_29';'miscut\_32\_30';'miscut\_32\_35';'miscut\_32\_37';'miscut\_32\_38';'miscut\_32\_39';'miscut\_32\_40';'miscut\_32\_36'};%{'miscut\_32\_36secondhalf';'miscut\_32\_31half';}%{'miscut\_32\_36transient';'miscut\_32\_36firsthalf';'miscut\_32\_36secondhalf'};%{'miscut\_32\_29';'miscut\_32\_30';'miscut\_32\_35';'miscut\_32\_31'};%{'miscut\_32\_31firsthalf';'miscut\_32\_31half'};%{'miscut\_32\_31';'miscut\_32\_31half';'miscut\_32\_31quarter';'miscut\_32\_31eight'};%['miscut\_32\_33';'miscut\_32\_34'];%['miscut\_32\_31';'miscut\_32\_32'];%['miscut\_32\_29';'miscut\_32\_30';'miscut\_32\_31'];%['miscut\_32\_22';'miscut\_32\_23'; 'miscut\_32\_28'; 'miscut\_32\_26'];%['miscut\_32\_22'];%['miscut\_32\_27'];%['miscut\_8\_14'];%
+paths = {'miscut_32_36/';'miscut_32_40/';'miscut_32_39/';'miscut_32_38/';'miscut_32_37/';'miscut_32_35/';'miscut_32_30/';'miscut_32_29/'};%
+runnames = {'miscut_32_36';'miscut_32_40';'miscut_32_39';'miscut_32_38';'miscut_32_37';'miscut_32_35';'miscut_32_30';'miscut_32_29'};%{'miscut_32_36secondhalf';'miscut_32_31half';}% {'miscut_32_36transient';'miscut_32_36firsthalf';'miscut_32_36secondhalf'}; %{'miscut_32_29';'miscut_32_30';'miscut_32_35';'miscut_32_31'};%{'miscut_32_31firsthalf';'miscut_32_31half'};%{'miscut_32_31';'miscut_32_31half';'miscut_32_31quarter' ;'miscut_32_31eight'};%%['miscut_32_33';'miscut_32_34'];%['miscut_32_30';'miscut_32_33'];%['miscut_32_29';'miscut_32_30';'miscut_32_31'];%['miscut_32_22';'miscut_32_23';'miscut_32_28';'miscut_32_26'];%['miscut_32_27'];%['miscut_8_14'];%['miscut_32_22'];%
+runname_titles = {'miscut\_32\_36';'miscut\_32\_40';'miscut\_32\_39';'miscut\_32\_38';'miscut\_32\_37';'miscut\_32\_35';'miscut\_32\_30';'miscut\_32\_29'};%{'miscut\_32\_36secondhalf';'miscut\_32\_31half';}%{'miscut\_32\_36transient';'miscut\_32\_36firsthalf';'miscut\_32\_36secondhalf'};%{'miscut\_32\_29';'miscut\_32\_30';'miscut\_32\_35';'miscut\_32\_31'};%{'miscut\_32\_31firsthalf';'miscut\_32\_31half'};%{'miscut\_32\_31';'miscut\_32\_31half';'miscut\_32\_31quarter';'miscut\_32\_31eight'};%['miscut\_32\_33';'miscut\_32\_34'];%['miscut\_32\_31';'miscut\_32\_32'];%['miscut\_32\_29';'miscut\_32\_30';'miscut\_32\_31'];%['miscut\_32\_22';'miscut\_32\_23'; 'miscut\_32\_28'; 'miscut\_32\_26'];%['miscut\_32\_22'];%['miscut\_32\_27'];%['miscut\_8\_14'];%
 
 
-growth_rates_all = [3.3e-9 3.3e-9/2 3.3e-9/4 3.3e-9/8 3.3e-9/16 3.3e-9/32 3.3e-9/64 0.0];%[0.0 0.0 0.0];%[0.0 0.0 0.0 0.0];%[0.0 0.0];%[3.3e-9 3.3e-9]./2;%[0.0 0.0];%[ 3.0e-9 1.65e-9 1.0e-15];% in ML/s%[ 3.0e-9];%
+growth_rates_all = [0.0 3.3e-9/64 3.3e-9/32 3.3e-9/16 3.3e-9/8 3.3e-9/4 3.3e-9/2 3.3e-9];
 color_rates_allgrowth = ['or';'ok';'om';'ob';'og';'oy';'oc';'ob'];%['k'];%
 path_save_fig = ['./figures_presentation_v6'];
 
-paths = flipud(paths);
-runnames = flipud(runnames);
-runnames_titles = flipud(runname_titles);
-
-growth_rates_all = fliplr(growth_rates_all);
-color_rates_allgrowth = fliplr(color_rates_allgrowth);
 
 skip = 1;
 
@@ -160,12 +155,12 @@ else
                 Cdt_struct(ss).contrast_fast = fit_res.contrast_fast;
                 Cdt_struct(ss).slope = fit_res.slope;
                 
-                Cdt_struct(ss).damHW_slow_sigma = fit_res.sigma_damHW_slow;
-                Cdt_struct(ss).damHW_fast_sigma = fit_res.sigma_damHW_fast;
-                Cdt_struct(ss).back_sigma = fit_res.sigma_back;
-                Cdt_struct(ss).contrast_slow_sigma = fit_res.sigma_contrast_slow;
-                Cdt_struct(ss).contrast_fast_sigma = fit_res.sigma_contrast_fast;
-                Cdt_struct(ss).slope_sigma = fit_res.sigma_slope;
+                Cdt_struct(ss).damHW_slow_sigma = zeros(nrow,ncol);%fit_res.sigma_damHW_slow;
+                Cdt_struct(ss).damHW_fast_sigma = zeros(nrow,ncol);%fit_res.sigma_damHW_fast;
+                Cdt_struct(ss).back_sigma = zeros(nrow,ncol);%fit_res.sigma_back;
+                Cdt_struct(ss).contrast_slow_sigma = zeros(nrow,ncol);%fit_res.sigma_contrast_slow;
+                Cdt_struct(ss).contrast_fast_sigma = zeros(nrow,ncol);%fit_res.sigma_contrast_fast;
+                Cdt_struct(ss).slope_sigma = zeros(nrow,ncol);%fit_res.sigma_slope;
                 
             case [path 'damHW_fit_singleexp.mat']
                 Cdt_struct(ss).damHW_fast = fit_res.damHW;
@@ -264,9 +259,20 @@ PAPERSIZE = [ 8.5000   11.0000];
 %fitfunc_str = 'FittingFunctions.CCN2single_fit';
 %fitfunc_str = 'FittingFunctions.CCN2single_fit_double_exp';
 fitfunc_str = 'FittingFunctions.CCN2single_fit_double_exp_contrast';
-pixel_to_plot = [-13 6];
-figNum = 12;
-Function_display_sos.display_fits(Cdt_struct,runname_titles,fitfunc_str,pixel_to_plot,growth_rates_all,figNum);
+pixel_to_plot_row = [[1:30:nrow]-nrow/2]' ;
+pixel_to_plot_col = [[1:30:ncol]-ncol/2]';%[-13 6];
+%figNum = 12;
+
+counter = 0;
+for pp = 1:size(pixel_to_plot_row,1)
+    for pp2 = 1:size(pixel_to_plot_col,1)
+        pixel_to_plot_index = [pixel_to_plot_row(pp) pixel_to_plot_col(pp2)];
+        
+        figNum = 12 + counter;
+        Function_display_sos.display_fits(Cdt_struct,runname_titles,fitfunc_str,pixel_to_plot_index,growth_rates_all,figNum);
+        counter = counter + 1;
+    end
+end
 
 %% Plot 2d maps
 
@@ -278,9 +284,11 @@ for ss = 1:size(runname_titles,1)
     title_figure(ss,:) = {[runname_titles{ss,:} ' tau fast  (sim. units)']};
 end
 Function_display_sos.make_figure_2D(title_figure,Cdt_struct,'damHW_fast',struct_ranges,...
-    iCTR,figNum,'CLIM',[5 10],...
+    iCTR,figNum,'CLIM',[5 12],...
     'POSITION',POSITION,'PAPERPOSITION',PAPERPOSITION,'PAPERSIZE',PAPERSIZE,...
     'plot_averages',1);
+
+
 
 % Figure 1: time constants
 figNum = 1000;
@@ -304,7 +312,7 @@ for ss = 1:size(runname_titles,1)
     title_figure(ss,:) = {[runname_titles{ss,:} ' tau slow  (sim. units)']};
 end
 Function_display_sos.make_figure_2D(title_figure,Cdt_struct,'damHW_slow',struct_ranges,...
-    iCTR,figNum,'CLIM',[0 1],...
+    iCTR,figNum,'CLIM',[5 12],...
     'POSITION',POSITION,'PAPERPOSITION',PAPERPOSITION,'PAPERSIZE',PAPERSIZE,...
     'plot_averages',1);
 
