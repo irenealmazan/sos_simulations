@@ -81,7 +81,7 @@ if ~skip_fit
     
     
     
-    for ss = size(runnames,1)%2:size(runnames,1)
+    for ss = 1:size(runnames,1)%2:size(runnames,1)
         path = paths{ss,:};
         
         display(path)
