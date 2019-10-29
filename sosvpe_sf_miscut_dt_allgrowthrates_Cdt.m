@@ -18,17 +18,9 @@ runname_titles = {'miscut\_32\_36';'miscut\_32\_40';'miscut\_32\_39';'miscut\_32
 
 
 growth_rates_all = [0.0 3.3e-9/64 3.3e-9/32 3.3e-9/16 3.3e-9/8 3.3e-9/4 3.3e-9/2 3.3e-9];
-
-growth_rates_all = [3.3e-9 3.3e-9/2 3.3e-9/4 3.3e-9/8 3.3e-9/16 3.3e-9/32 3.3e-9/64 0.0];%[0.0 0.0 0.0];%[0.0 0.0 0.0 0.0];%[0.0 0.0];%[3.3e-9 3.3e-9]./2;%[0.0 0.0];%[ 3.0e-9 1.65e-9 1.0e-15];% in ML/s%[ 3.0e-9];%
 color_rates_allgrowth = ['or';'ok';'om';'ob';'og';'oy';'oc';'ob'];%['k'];%
 path_save_fig = ['./figures_presentation_v6'];
 
-paths = flipud(paths);
-runnames = flipud(runnames);
-runnames_titles = flipud(runname_titles);
-
-growth_rates_all = fliplr(growth_rates_all);
-color_rates_allgrowth = fliplr(color_rates_allgrowth);
 
 skip = 1;
 
