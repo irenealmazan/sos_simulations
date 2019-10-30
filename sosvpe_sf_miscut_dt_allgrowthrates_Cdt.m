@@ -19,7 +19,7 @@ runname_titles = {'miscut\_32\_36';'miscut\_32\_40';'miscut\_32\_39';'miscut\_32
 
 
 growth_rates_all = [0.0 3.3e-9/64 3.3e-9/32 3.3e-9/16 3.3e-9/8 3.3e-9/4 3.3e-9/2 3.3e-9];
-color_rates_allgrowth = ['or';'ok';'om';'ob';'og';'oy';'oc';'ob'];%['k'];%
+color_rates_allgrowth = ['or';'ok';'om';'ob';'og';'oy';'oc';'xb'];%['k'];%
 path_save_fig = ['./figures_presentation_v6'];
 
 
@@ -47,7 +47,7 @@ end
 %% fit the CdtI with two single exponential decays (taking as the fast decay time constant, 
 %  the time constant obtained from the fit of the 0 growth rate)
 
-skip_fit = 0;
+skip_fit = 1;
 
 if ~skip_fit
     
@@ -81,7 +81,7 @@ if ~skip_fit
     
     
     
-    for ss = size(runnames,1)%2:size(runnames,1)
+    for ss = 2:size(runnames,1)
         path = paths{ss,:};
         
         display(path)
@@ -309,7 +309,7 @@ for ss = 1:size(runname_titles,1)
     title_figure(ss,:) = {[runname_titles{ss,:} ' tau fast  (sim. units)']};
 end
 Function_display_sos.make_figure_2D(title_figure,Cdt_struct,'damHW_fast',struct_ranges,...
-    iCTR,figNum,'CLIM',[5 12],...
+    iCTR,figNum,'CLIM',[5 10],...
     'POSITION',POSITION,'PAPERPOSITION',PAPERPOSITION,'PAPERSIZE',PAPERSIZE,...
     'plot_averages',1);
 
@@ -337,7 +337,7 @@ for ss = 1:size(runname_titles,1)
     title_figure(ss,:) = {[runname_titles{ss,:} ' tau slow  (sim. units)']};
 end
 Function_display_sos.make_figure_2D(title_figure,Cdt_struct,'damHW_slow',struct_ranges,...
-    iCTR,figNum,'CLIM',[5 12],...
+    iCTR,figNum,'CLIM',[5 10],...
     'POSITION',POSITION,'PAPERPOSITION',PAPERPOSITION,'PAPERSIZE',PAPERSIZE,...
     'plot_averages',1);
 
@@ -561,75 +561,131 @@ Function_display_sos.make_figures_tauML1D(['QY is negative,  offset in Qx = ' nu
     'log','YLIM',[1e5 1e17]);
 legend(legend_str);
 
+return;
 
 
-%{
+%% Plot ihm
 
-%legend(legend_str);
+%% load ihm
 
-%% Look at the averages over rows
 
-range_rows = iycen+iyaoff+[-iyahw:iyahw];
-
-for ss = 1:size(runnames,1)
+for ss = 6:size(runnames,1)
     
-        Cdt_struct(ss).Cdt_1D = squeeze(mean(Cdt_struct(ss).Cdt(range_rows,:,:),1));
-        Cdt_struct(ss).tauML_1D = mean(Cdt_struct(ss).damHW(range_rows,:),1);
+     path = paths{ss,:};
+     runname = [paths{ss,:} runnames{ss,:}];
+     runname_title = runname_titles{ss,:};
+ 
+    
+     
+     
+%      if strcmp(runname_title ,[ 'miscut\_32\_26'])
+%          load([runname '_ihm_last2000.mat']);
+%          ihm = ihm_resize;
+%          clear ihm_resize;
+%          dtime_orig = load([runname '_stats.mat'],'dtime');
+%          dtime = dtime_orig.dtime(end-size(ihm,3):end);
+%          clear dtime_orig
+%      elseif strcmp(runname_title ,[ 'miscut\_32\_32'])
+%          load([runname '_ihm.mat']);
+%          dtime_orig = load([runname '_stats.mat'],'dtime');
+%          dtime = dtime_orig.dtime;
+%          clear dtime_orig
+%      elseif strcmp(runname_title ,[ 'miscut\_32\_33'])
+%          load([runname '_ihm.mat']);
+%          dtime_orig = load([runname '_stats.mat'],'dtime');
+%          dtime = dtime_orig.dtime;
+%          clear dtime_orig
 
+    if strcmp(runname_title ,[ 'miscut\_32\_29'])
+        load([runname '_ihm.mat']);
+        load([runname '_stats.mat'],'dtime');
+    elseif strcmp(runname_title ,[ 'miscut\_32\_30'])
+        load([runname '_ihm.mat']);
+        load([runname '_stats.mat'],'dtime');
+    elseif strcmp(runname_title ,[ 'miscut\_32\_35'])
+        load([runname '_ihm.mat']);
+        load([runname '_stats.mat'],'dtime');
+    elseif strcmp(runname_title ,[ 'miscut\_32\_36'])
+        load([runname '_ihm.mat']);
+        load([runname '_stats.mat'],'dtime');
+
+    elseif strcmp(runname_title ,[ 'miscut\_32\_37'])
+        load([runname '_ihm_half.mat']);
+        ihm = ihm_half;
+        dtime_orig = load([runname '_stats.mat'],'dtime');
+        dtime = dtime_orig.dtime(end-round(size(ihm_half,3)/2):end);
+        clear ihm_half
+        clear dtime_orig
+    elseif strcmp(runname_title ,[ 'miscut\_32\_38'])
+        load([runname '_ihm_half.mat']);
+        ihm = ihm_half;
+        dtime_orig = load([runname '_stats.mat'],'dtime');
+        dtime = dtime_orig.dtime(end-size(ihm_half,3):end);
+        clear ihm_half
+        clear dtime_orig
+
+    elseif strcmp(runname_title ,[ 'miscut\_32\_39'])
+        load([runname '_ihm_half.mat']);
+        ihm = ihm_half;
+        dtime_orig = load([runname '_stats.mat'],'dtime');
+        dtime = dtime_orig.dtime(end-size(ihm_half,3):end);
+        clear ihm_half
+        clear dtime_orig
+
+    elseif strcmp(runname_title ,[ 'miscut\_32\_40'])
+        load([runname '_ihm_half.mat']);
+        ihm = ihm_half;
+        dtime_orig = load([runname '_stats.mat'],'dtime');
+        dtime = dtime_orig.dtime(end-size(ihm_half,3):end);
+        clear ihm_half
+        clear dtime_orig
+
+    end
+    
+    if strcmp(runname_title ,[ 'miscut\_32\_37'])
+         dt_minML = dtime(end-round(2.50e4/2));%dtime(30);%dtime(end-round(2.5e4/8));%dtime(end-6.3e3);% % dtime(end-1e4);
+
+    else
+        dt_minML = dtime(end-2.50e4);%dtime(30);%dtime(end-round(2.5e4/8));%dtime(end-6.3e3);% % dtime(end-1e4);
+    end
+    dt_maxML = dtime(end);%dtime(250);%dtime(end-1.25e4);%
+    %idt = dtime >dt_minML;
+    idt = (dtime>dt_minML & dtime<dt_maxML);
+    
+    idt_half =round(size(idt,1)/2);
+    
+    ihm_struct(ss).ihm = squeeze(ihm(:,:,idt_half));
+    
+
+    
+    
 end
 
-pixel_row = 30;
+nrow_orig = size(ihm_struct(1).ihm,1);
+ncol_orig = size(ihm_struct(1).ihm,2);
 
-figure(2);
-clf;
-for ss = 1:size(runnames,1)
-     Cdti = squeeze(Cdt_struct(ss).Cdt_1D(pixel_row,:));
-     Cdti = Cdti/Cdti(1);
-    time1D = Cdt_struct(ss).ddam;
-    
-    tau = Cdt_struct(ss).tauML_1D(pixel_row);
-    
-    subplot(1,round(numSubplots),ss);
-    hold on;
-   plot( time1D,Cdti,'Color',color_rates_allgrowth(ss),'Marker','o');
-   plot( time1D,feval(fitfunc_str, time1D,[0 1 tau 0]),'r','LineWidth',3.0);
-   title({[runname_titles{ss,:}];[ ' g.rate (ML/s) = ' num2str(growth_rates_all(ss))];[ ' \tau = ' num2str(tau,'%.1e')]});
 
-   set(gca,'XScale','log');
-   ylim([-0.2 1]);
+
+%% Plot ihm
+
+struct_ranges_ihm = struct_ranges;
+struct_ranges_ihm.QX = [1:ncol];
+struct_ranges_ihm.QY = [1:nrow];
+struct_ranges_ihm.row_range = [1:nrow];
+struct_ranges_ihm.col_range = round(ncol_orig/2)+[-round(ncol/2):round(ncol/2)-1]; 
+
+% Figure 13: ihm
+figNum = 13;
+% time frame to represent:
+%time_frame = 130;
+clear title_figure;
+for ss = 1:size(runname_titles,1)
+    title_figure(ss,:) = {[runname_titles{ss,:} ' ihm']};
+    ihm_struct(ss).ihm_square = ihm_struct(ss).ihm(struct_ranges_ihm.row_range,struct_ranges_ihm.col_range,:);
 end
 
-%% Look at the averages over columns
 
-range_col = ixcen+ixaoff+[-ixahw:ixahw];
-
-
-for ss = 1:size(runnames,1)
-    
-        Cdt_struct(ss).Cdt_1D_QY = squeeze(mean(Cdt_struct(ss).Cdt(:,range_col,:),2));
-        Cdt_struct(ss).tauML_1D_QY = mean(Cdt_struct(ss).damHW(:,range_col),1);
-
-end
-
-pixel_row = 30;
-
-figure(3);
-clf;
-for ss = 1:size(runnames,1)
-     Cdti = squeeze(Cdt_struct(ss).Cdt_1D_QY(pixel_row,:));
-     Cdti = Cdti/Cdti(1);
-    time1D = Cdt_struct(ss).ddam;
-    
-    tau = Cdt_struct(ss).tauML_1D_QY(pixel_row);
-    
-    subplot(1,round(numSubplots),ss);
-    hold on;
-   plot( time1D,Cdti,'Color',color_rates_allgrowth(ss),'Marker','o');
-   plot( time1D,feval(fitfunc_str, time1D,[0 1 tau 0]),'r','LineWidth',3.0);
-   title({[runname_titles{ss,:}];[ ' g.rate (ML/s) = ' num2str(growth_rates_all(ss))];[ ' \tau = ' num2str(tau,'%.1e')]});
-
-   set(gca,'XScale','log');
-   ylim([-0.2 1]);
-end
-
-%}
+Function_display_sos.make_figure_2D_realspace( title_figure,ihm_struct,'ihm_square',struct_ranges_ihm,figNum,...
+    'CLIM',[0 35],...
+    'POSITION',POSITION,'PAPERPOSITION',PAPERPOSITION,...
+    'plot_averages',0);
