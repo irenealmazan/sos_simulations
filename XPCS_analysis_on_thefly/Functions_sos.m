@@ -133,8 +133,8 @@ classdef Functions_sos
                     fit_range = [1:1:round(length(Cdti)/4)];%[1:1:round(length(Cdti)/4)];
                     fitfunc_str = 'FittingFunctions.CCN2single_fit';
                     
-                    pin = [0  Cdti(1) 5e6 0];%pin_iiT(iT,:);
-                    dp =  [[0 1 1 0]*0.0001];%dp_iiT(iT,:);
+                    pin = [0  0.9 5e6 0];%pin_iiT(iT,:);
+                    dp =  [[0 0 1 0]*0.0001];%dp_iiT(iT,:);
                     
                     for tt = 1:length(fit_range)
                         w(tt) = sqrt(length(fit_range)-(tt-1));%ones(length(fit_range),1);
